@@ -11,10 +11,12 @@
     <title>Document</title>
 </head>
 <body>
-    Name: <input type="text" data-bind="value: name, valueUpdate: 'afterkeydown'">
+    First Name: <input type="text" data-bind="value: firstName, valueUpdate: 'afterkeydown'"> <br>
+    Last Name: <input type="text" data-bind="value: lastName, valueUpdate: 'afterkeydown'">
     <input type="checkbox" data-bind="checked: nameVisible">
     <p>
-        Hello, <span data-bind="text: name, visible: nameVisible"></span>
+        Hello, <span data-bind="text: firstName, visible: nameVisible"></span> <br>
+        Full Name, <span data-bind="text: fullName"></span>
     </p>
     <button data-bind="click: changeName">Change Name</button>
 </body>
@@ -22,12 +24,16 @@
 <script>
     $(function () {
         var viewModel = {
-            name: ko.observable("Bob"),
+            firstName: ko.observable("Taylor"),
+            lastName: ko.observable("Otwell"),
             changeName: function () {
-                this.name = "Steve";
+                this.firstName("Steve");
             },
             nameVisible: ko.observable(true)
         }
+        viewModel.fullName = ko.dependentObservable(function () {
+            return this.firstName() + " " + this.lastName();
+        }, viewModel);
         ko.applyBindings(viewModel);
     });
 </script>

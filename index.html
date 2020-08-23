@@ -11,9 +11,10 @@
     <title>Document</title>
 </head>
 <body>
-    Name: <input type="text" data-bind="value: name">
+    Name: <input type="text" data-bind="value: name, valueUpdate: 'afterkeydown'">
+    <input type="checkbox" data-bind="checked: nameVisible">
     <p>
-        Hello, <span data-bind="text: name"></span>
+        Hello, <span data-bind="text: name, visible: nameVisible"></span>
     </p>
     <button data-bind="click: changeName">Change Name</button>
 </body>
@@ -24,7 +25,8 @@
             name: ko.observable("Bob"),
             changeName: function () {
                 this.name = "Steve";
-            }
+            },
+            nameVisible: ko.observable(true)
         }
         ko.applyBindings(viewModel);
     });

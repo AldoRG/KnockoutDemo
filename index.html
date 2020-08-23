@@ -19,15 +19,30 @@
         Full Name, <span data-bind="text: fullName"></span>
     </p>
     <button data-bind="click: changeName">Change Name</button>
+    <br>
+    <button data-bind="click: addItem">Add</button>
+    <button data-bind="click: removeItem">Remove</button>
+    <ul data-bind="template: { name: 'listTempl', foreach: list}"></ul>
+    <script id="listTempl" type="text/html">
+        <li data-bind="text: name"></li>
+    </script>
 </body>
 
 <script>
     $(function () {
+        var data = [ {name: "One"}, {name: "Two"}, {name: "Three"} ];
         var viewModel = {
             firstName: ko.observable("Taylor"),
             lastName: ko.observable("Otwell"),
+            list: ko.observableArray(data),
             changeName: function () {
                 this.firstName("Steve");
+            },
+            addItem: function () {
+                this.list.push({ name: "Four"});
+            },
+            removeItem: function () {
+                this.list.pop();
             },
             nameVisible: ko.observable(true)
         }
